@@ -27,6 +27,7 @@ function getImageData() {
 function applyFilter(filter) {
   var data = getImageData();
   data.data = filter(data.data);
+  //console.debug(data.data);
   canvasContext.putImageData(data, 0, 0);
 }
 
