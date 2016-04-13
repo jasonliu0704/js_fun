@@ -1,17 +1,24 @@
+// rgb shift for brightness filter; increase to add more brightness
+var BRIGHTNESS_SHIFT = 40;
+
+// distance threshold from black for threshold filter
+var THRESHOLD_DISTANCE = 100;
+
 /* Filters the given pixels to grayscale.
  *
  * Arguments:
  * pixels -- an array of pixel values
  */
-
 function filterGrayscale(pixels) {
-	for(var i=0; i <pixels.length; i+=4){
-		var a = (pixels[i] + pixels[i+1] + pixels[i+2])/3;
-		pixels[i] = a;
-		pixels[i + 1] = a;
-		pixels[i + 2] = a;
-	}
-	return pixels;
+  for (var i = 0; i < pixels.length; i += 4) {
+    // use average as grayscale value
+    var grayscale = (pixels[i] + pixels[i + 1] + pixels[i + 2]) / 3;
+
+    // when all rgb components are the same, the color is grayscale
+    pixels[i] = grayscale;
+    pixels[i + 1] = grayscale;
+    pixels[i + 2] = grayscale;
+  }
 }
 
 /* Brightens the given pixels.
@@ -20,21 +27,20 @@ function filterGrayscale(pixels) {
  * pixels -- an array of pixel values
  */
 function filterBrighten(pixels) {
-
-	for(var i in pixels){
-		pixels[i] += 50;
-	}
+  for (var i = 0; i < pixels.length; i += 4) {
+    // add constant adjustment value to all components to increase brightness
+    pixels[i] += BRIGHTNESS_SHIFT;
+    pixels[i + 1] += BRIGHTNESS_SHIFT;
+    pixels[i + 2] += BRIGHTNESS_SHIFT;
+  }
 }
 
-
-var THRESHOLD_DISTANCE = 100;
 /* Applies a threshold filter to the given pixels. Makes all pixels above
  * the threshold black and all pixels below the threshold white.
  *
  * Arguments:
  * pixels -- an array of pixel values
  */
-
 function filterThreshold(pixels) {
   for (var i = 0; i < pixels.length; i += 4) {
     var red = pixels[i];
