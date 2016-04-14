@@ -22,16 +22,29 @@
    */
   function extractFlavors() {
     var result = [];
-    var elements = document.getElementsByClassName("flavors");
+    var elements = document.getElementsByClassName("flavor");
     for(var i = 0; i<elements.length; i++){
-      result.push({element: elements[i]}, name: )
+      result.push({element: elements[i], 
+      name: elements[i].children[1].children[0].innerHTML, 
+      description: elements[i].children[1].children[1].innerHTML,
+      price: elements[i].children[0].children[2].innerHTML,
+      quantity: elements[i].children[0].children[1].innerHTML});
     }
+    
+    return result;
   }
 
   /* Calculates and returns the average price of the given set of flavors. The
    * average should be rounded to two decimal places. */
   function calculateAveragePrice(flavors) {
-    // TODO
+    var sum = 0;
+    var num = 0;
+    flavors.forEach(function(flavor){
+      sum += parseFloat(flavor.price.substring(1));
+      num++;
+    })
+    
+    return (sum / num).toFixed(2);
   }
 
   /* Finds flavors that have prices below the given threshold. Returns an array
