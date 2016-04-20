@@ -43,7 +43,6 @@
       sum += parseFloat(flavor.price.substring(1));
       num++;
     })
-    
     return (sum / num).toFixed(2);
   }
 
@@ -51,13 +50,24 @@
    * of strings, each of the form "[flavor] costs $[price]". There should be
    * one string for each cheap flavor. */
   function findCheapFlavors(flavors, threshold) {
-    // TODO
+    var cheapFlavors = [];
+    var all = flavors.filter(function(elements){
+      return elements.price < threshold;
+    });
+    cheapFlavors = all.map(function(elements){
+      return elements.name + "costs $" + elements.price;
+    });
+    return cheapFlavors;
   }
 
   /* Populates the select dropdown with options. There should be one option tag
    * for each of the given flavors. */
   function populateOptions(flavors) {
-    // TODO
+    var flavorChunk = '';
+    flavors.forEach(function(element){
+      flavorChunk = flavorChunk +  '<option>' + element.name + '</option>'; 
+    });
+    document.querySelector('select[name="flavor"]').innerHTML = flavorChunk;
   }
 
   /* Processes orders for the given set of flavors. When a valid order is made,
