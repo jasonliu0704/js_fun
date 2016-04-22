@@ -73,12 +73,34 @@
   /* Processes orders for the given set of flavors. When a valid order is made,
    * decrements the quantity of the associated flavor. */
   function processOrders(flavors) {
-    // TODO
+    document.querySelector("#footer input[type=submit]").addEventListener("submit", function(e){
+      e.preventDefault();
+      var flavor = document.querySelector("#footer select").value;
+      var quantity = document.querySelector("#footer input[name=amount]").value;
+      document.querySelectorAll("flavor").some(function(element){
+        if(element.children[1][0].text == flavor){
+          if(element.children[0][0].text < quantity){
+            return;
+          }
+          element.children[0][0].text -= quantity;
+          return;
+        }
+      });
+      flavors.some(function(element){
+        if(element.name == flavor){
+          if(element.quantity < quantity){
+            return;
+          }
+          element.quantity -= quantity;
+          return;
+        }
+      });
+    });    
   }
 
   /* Highlights flavors when clicked to make a simple favoriting system. */
   function highlightFlavors(flavors) {
-    // TODO
+
   }
 
 
