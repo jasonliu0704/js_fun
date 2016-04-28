@@ -73,16 +73,17 @@
   /* Processes orders for the given set of flavors. When a valid order is made,
    * decrements the quantity of the associated flavor. */
   function processOrders(flavors) {
-    document.querySelector("#footer input[type=submit]").addEventListener("submit", function(e){
+    document.querySelector("#footer form").addEventListener("submit", function(e){
       e.preventDefault();
       var flavor = document.querySelector("#footer select").value;
       var quantity = document.querySelector("#footer input[name=amount]").value;
-      document.querySelectorAll("flavor").some(function(element){
-        if(element.children[1][0].text == flavor){
-          if(element.children[0][0].text < quantity){
+      var select = document.querySelectorAll(".flavor");
+      [].some.call(select, function(element) {
+        if(element.children[1].children[0].innerHTML == flavor){
+          if(element.children[0].children[0].innerHTML < quantity){
             return;
           }
-          element.children[0][0].text -= quantity;
+          element.children[0].children[0].innerHTML -= quantity;
           return;
         }
       });
@@ -100,7 +101,12 @@
 
   /* Highlights flavors when clicked to make a simple favoriting system. */
   function highlightFlavors(flavors) {
-
+    var select = document.querySelectorAll(".flavor");
+    [].some.call(select, function(element){
+      element.addEventListener("click", function(e){
+        element.classList.toggle("highlighted");
+      });
+    });
   }
 
 
