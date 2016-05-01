@@ -29,4 +29,24 @@ function storeQuestions(questions) {
 // display question form initially
 rightPane.appendChild(renderQuestionForm());
 
+// Task1: When the question form in the right pane is submitted,
+// add a question to the left pane.
+$("#question-form").bind("submit", function(e){
+	e.preventDefault();
+	//get questions from local storage
+	var questions = getStoredQuestions();
+	var newquestion = {
+	 id: questions.length,
+	 subject: $('body #wrapper #right-pane form[id="question-form"] input[name="subject"]').val(),
+	 question: $('body #wrapper #right-pane form[id="question-form"] textarea[name="question"]').val()
+	};
+	questions.push(newquestion);
+	//store updated questions to local storage
+	storeQuestions(questions);
+	//render
+	var html = renderQuestions(questions);
+	$('div[id="navigation"] div[id="left-pane').html(html);
+	
+});
+
 // TODO: display question list initially (if there are existing questions)
