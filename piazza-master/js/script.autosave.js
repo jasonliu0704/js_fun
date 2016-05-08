@@ -88,5 +88,6 @@ $("body #wrapper #right-pane").on('click', 'a', function(e){
 	storeQuestions(questions);
 	$('#interactors .btn').click();
 	var q = renderQuestions(questions);
-	$('div[id="navigation"] div[id="left-pane"]').html(q.outerHTML);
-});
+	('div[id="navigation"] div[id="left-pane"]').html
+
+})
