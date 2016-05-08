@@ -28,25 +28,42 @@ function storeQuestions(questions) {
 
 // display question form initially
 rightPane.appendChild(renderQuestionForm());
+$('div[id="navigation"] div[id="left-pane').html(renderQuestions(getStoredQuestions()));
 
 // Task1: When the question form in the right pane is submitted,
 // add a question to the left pane.
-$("#question-form").bind("submit", function(e){
+// Task2: When a question box in the left pane is clicked, display the question, the response form, 
+// and the responses in the right pane.
+// Task 3: When the new question form button is clicked, display the question form in the right pane.
+$('#interactors .btn').on('click', function(e){
+	e.preventDefault();
+	$('#right-pane').html(renderQuestionForm().outerHTML);
+});
+
+// add event listener to display expandedQuestion form
+$('div[id="navigation"] div[id="left-pane"]').on('click','div[class="list-question question-info"]', function(e){
+	var questions = getStoredQuestions();
+	$('#right-pane').html(renderExpandedQuestion(questions[$(this).attr('id')]).outerHTML);	
+});
+
+$("body #wrapper #right-pane").on('submit', 'form[id="question-form"]', function(e){
 	e.preventDefault();
 	//get questions from local storage
 	var questions = getStoredQuestions();
 	var newquestion = {
 	 id: questions.length,
 	 subject: $('body #wrapper #right-pane form[id="question-form"] input[name="subject"]').val(),
-	 question: $('body #wrapper #right-pane form[id="question-form"] textarea[name="question"]').val()
+	 question: $('body #wrapper #right-pane form[id="question-form"] textarea[name="question"]').val(),
+	 responses: []
 	};
 	questions.push(newquestion);
 	//store updated questions to local storage
 	storeQuestions(questions);
 	//render
-	var html = renderQuestions(questions);
-	$('div[id="navigation"] div[id="left-pane').html(html);
-	
+	var q = renderQuestions(questions);
+	$('div[id="navigation"] div[id="left-pane"]').html(q.outerHTML);
+
+	//reset form
+	$('body #wrapper #right-pane form[id="question-form"]')[0].reset();
 });
 
-// TODO: display question list initially (if there are existing questions)
