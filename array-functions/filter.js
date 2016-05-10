@@ -18,6 +18,17 @@ var sexyPeople = people.filter(function(person) {
   return person.status.indexOf('hot') !== -1;
 });
 
+// my implementation
+function filter(array, fn){
+  var res = [];
+  array.forEach(function(it){
+    if(fn(it)){
+      res.push(it);
+    }
+  });
+  return res;
+}
+
 // Simple filter() implementation
 function filter(array, fn) {
   var filteredArray = [];
